@@ -6,14 +6,12 @@ n = int(input())
 dist = list(map(int, input().split()))
 cost = list(map(int, input().split()))
 
-totalDist = sum(dist)
-
-dp = [totalDist * cost[0] for _ in range(n-1)]
-temp = 0
-
+temp = cost[0]
+dp = [0 for _ in range(n-1)]
+dp[0] = cost[0] * dist[0]
 for i in range(1, n-1):
-    totalDist -= dist[i - 1]
-    temp += cost[i-1] * dist[i-1]
-    dp[i] = temp + cost[i] * totalDist
+    if cost[i] < temp:
+        temp = cost[i]
+    dp[i] = temp * dist[i] + dp[i-1]
 
-print(min(dp))
+print(dp[-1])
